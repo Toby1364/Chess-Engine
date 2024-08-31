@@ -334,42 +334,7 @@ fn play(board: &mut [[Option<Piece>; 8]; 8], wmk: bool, bmk: &mut bool) {
 
             ao.sort_by(|a, b| b.0.partial_cmp(&a.0).unwrap());
 
-            if ao.len() != 0 {
-                eval += ao[ao.len() - 1].0;
-
-                let am = ao[0].1;
-
-                ao.clear();
-
-                ar[am.3][am.2] = ar[am.1][am.0];
-                ar[am.1][am.0] = None;
-
-                if ar[am.3][am.2].unwrap().kind == Kind::Pawn && m.3 == 0 {
-                ar[m.3][m.2] = Piece::wq();
-                }
-                if ar[am.3][am.2].unwrap().kind == Kind::Pawn && m.3 == 7 {
-                    ar[m.3][m.2] = Piece::bq();
-                }
-
-                if ar[am.3][am.2].unwrap().kind == Kind::Pawn && m.3 == 0 {
-                    ar[m.3][m.2] = Piece::wq();
-                }
-
-                let avm = valid_moves(ar, wmk, *bmk);
-
-                for m1 in avm {
-                    let mut ar1 = ar;
-
-                    if ar1[m1.1][m1.0].unwrap().white {continue}
-
-                    ar1[m1.3][m1.2] = ar1[m1.1][m1.0];
-                    ar1[m1.1][m1.0] = None;
-
-                    ao.push((evaluate(ar1), m1))
-                }
-
-                ao.sort_by(|a, b| b.0.partial_cmp(&a.0).unwrap());
-
+            for _ in 0..128 {
                 if ao.len() != 0 {
                     eval += ao[ao.len() - 1].0;
 
@@ -401,193 +366,10 @@ fn play(board: &mut [[Option<Piece>; 8]; 8], wmk: bool, bmk: &mut bool) {
                         ar1[m1.3][m1.2] = ar1[m1.1][m1.0];
                         ar1[m1.1][m1.0] = None;
 
-                        if ar[am.3][am.2].unwrap().kind == Kind::Pawn && m.3 == 0 {
-                        ar[m.3][m.2] = Piece::wq();
-                        }
-                        if ar[am.3][am.2].unwrap().kind == Kind::Pawn && m.3 == 7 {
-                            ar[m.3][m.2] = Piece::bq();
-                        }
-
                         ao.push((evaluate(ar1), m1))
                     }
 
                     ao.sort_by(|a, b| b.0.partial_cmp(&a.0).unwrap());
-
-                    if ao.len() != 0 {
-                        eval += ao[ao.len() - 1].0;
-
-                        let am = ao[0].1;
-
-                        ao.clear();
-
-                        ar[am.3][am.2] = ar[am.1][am.0];
-                        ar[am.1][am.0] = None;
-
-                        if ar[am.3][am.2].unwrap().kind == Kind::Pawn && m.3 == 0 {
-                        ar[m.3][m.2] = Piece::wq();
-                        }
-                        if ar[am.3][am.2].unwrap().kind == Kind::Pawn && m.3 == 7 {
-                            ar[m.3][m.2] = Piece::bq();
-                        }
-
-                        if ar[am.3][am.2].unwrap().kind == Kind::Pawn && m.3 == 0 {
-                            ar[m.3][m.2] = Piece::wq();
-                        }
-
-                        let avm = valid_moves(ar, wmk, *bmk);
-
-                        for m1 in avm {
-                            let mut ar1 = ar;
-
-                            if ar1[m1.1][m1.0].unwrap().white {continue}
-
-                            ar1[m1.3][m1.2] = ar1[m1.1][m1.0];
-                            ar1[m1.1][m1.0] = None;
-
-                            if ar[am.3][am.2].unwrap().kind == Kind::Pawn && m.3 == 0 {
-                            ar[m.3][m.2] = Piece::wq();
-                            }
-                            if ar[am.3][am.2].unwrap().kind == Kind::Pawn && m.3 == 7 {
-                                ar[m.3][m.2] = Piece::bq();
-                            }
-
-                            ao.push((evaluate(ar1), m1))
-                        }
-
-                        ao.sort_by(|a, b| b.0.partial_cmp(&a.0).unwrap());
-
-                        if ao.len() != 0 {
-                            eval += ao[ao.len() - 1].0;
-
-                            let am = ao[0].1;
-
-                            ao.clear();
-
-                            ar[am.3][am.2] = ar[am.1][am.0];
-                            ar[am.1][am.0] = None;
-
-                            if ar[am.3][am.2].unwrap().kind == Kind::Pawn && m.3 == 0 {
-                            ar[m.3][m.2] = Piece::wq();
-                            }
-                            if ar[am.3][am.2].unwrap().kind == Kind::Pawn && m.3 == 7 {
-                                ar[m.3][m.2] = Piece::bq();
-                            }
-
-                            if ar[am.3][am.2].unwrap().kind == Kind::Pawn && m.3 == 0 {
-                                ar[m.3][m.2] = Piece::wq();
-                            }
-
-                            let avm = valid_moves(ar, wmk, *bmk);
-
-                            for m1 in avm {
-                                let mut ar1 = ar;
-
-                                if ar1[m1.1][m1.0].unwrap().white {continue}
-
-                                ar1[m1.3][m1.2] = ar1[m1.1][m1.0];
-                                ar1[m1.1][m1.0] = None;
-
-                                if ar[am.3][am.2].unwrap().kind == Kind::Pawn && m.3 == 0 {
-                                ar[m.3][m.2] = Piece::wq();
-                                }
-                                if ar[am.3][am.2].unwrap().kind == Kind::Pawn && m.3 == 7 {
-                                    ar[m.3][m.2] = Piece::bq();
-                                }
-
-                                ao.push((evaluate(ar1), m1))
-                            }
-
-                            ao.sort_by(|a, b| b.0.partial_cmp(&a.0).unwrap());
-
-                            if ao.len() != 0 {
-                                eval += ao[ao.len() - 1].0;
-
-                                let am = ao[0].1;
-
-                                ao.clear();
-
-                                ar[am.3][am.2] = ar[am.1][am.0];
-                                ar[am.1][am.0] = None;
-
-                                if ar[am.3][am.2].unwrap().kind == Kind::Pawn && m.3 == 0 {
-                                ar[m.3][m.2] = Piece::wq();
-                                }
-                                if ar[am.3][am.2].unwrap().kind == Kind::Pawn && m.3 == 7 {
-                                    ar[m.3][m.2] = Piece::bq();
-                                }
-
-                                if ar[am.3][am.2].unwrap().kind == Kind::Pawn && m.3 == 0 {
-                                    ar[m.3][m.2] = Piece::wq();
-                                }
-
-                                let avm = valid_moves(ar, wmk, *bmk);
-
-                                for m1 in avm {
-                                    let mut ar1 = ar;
-
-                                    if ar1[m1.1][m1.0].unwrap().white {continue}
-
-                                    ar1[m1.3][m1.2] = ar1[m1.1][m1.0];
-                                    ar1[m1.1][m1.0] = None;
-
-                                    if ar[am.3][am.2].unwrap().kind == Kind::Pawn && m.3 == 0 {
-                                    ar[m.3][m.2] = Piece::wq();
-                                    }
-                                    if ar[am.3][am.2].unwrap().kind == Kind::Pawn && m.3 == 7 {
-                                        ar[m.3][m.2] = Piece::bq();
-                                    }
-
-                                    ao.push((evaluate(ar1), m1))
-                                }
-
-                                ao.sort_by(|a, b| b.0.partial_cmp(&a.0).unwrap());
-
-                                if ao.len() != 0 {
-                                    eval += ao[ao.len() - 1].0;
-
-                                    let am = ao[0].1;
-
-                                    ao.clear();
-
-                                    ar[am.3][am.2] = ar[am.1][am.0];
-                                    ar[am.1][am.0] = None;
-
-                                    if ar[am.3][am.2].unwrap().kind == Kind::Pawn && m.3 == 0 {
-                                    ar[m.3][m.2] = Piece::wq();
-                                    }
-                                    if ar[am.3][am.2].unwrap().kind == Kind::Pawn && m.3 == 7 {
-                                        ar[m.3][m.2] = Piece::bq();
-                                    }
-
-                                    if ar[am.3][am.2].unwrap().kind == Kind::Pawn && m.3 == 0 {
-                                        ar[m.3][m.2] = Piece::wq();
-                                    }
-
-                                    let avm = valid_moves(ar, wmk, *bmk);
-
-                                    for m1 in avm {
-                                        let mut ar1 = ar;
-
-                                        if ar1[m1.1][m1.0].unwrap().white {continue}
-
-                                        ar1[m1.3][m1.2] = ar1[m1.1][m1.0];
-                                        ar1[m1.1][m1.0] = None;
-
-                                        if ar[am.3][am.2].unwrap().kind == Kind::Pawn && m.3 == 0 {
-                                        ar[m.3][m.2] = Piece::wq();
-                                        }
-                                        if ar[am.3][am.2].unwrap().kind == Kind::Pawn && m.3 == 7 {
-                                            ar[m.3][m.2] = Piece::bq();
-                                        }
-
-                                        ao.push((evaluate(ar1), m1))
-                                    }
-
-                                    ao.sort_by(|a, b| b.0.partial_cmp(&a.0).unwrap());
-                                }
-                            }
-                        }
-                    }
                 }
             }
         }
@@ -671,7 +453,7 @@ fn valid_moves(board: [[Option<Piece>; 8]; 8], wmk: bool, bmk: bool) -> Vec<(usi
                 match piece.kind {
                     Kind::Pawn => {
                         if piece.white {
-                            if board[y-1][x].is_none() {
+                            if y-1 < 7 && board[y-1][x].is_none() {
                                 valid.push((x, y, x, y-1));
 
                                 if y == 6 && board[y-2][x].is_none() {
@@ -689,7 +471,7 @@ fn valid_moves(board: [[Option<Piece>; 8]; 8], wmk: bool, bmk: bool) -> Vec<(usi
                                 }
                             }
                         } else {
-                            if board[y+1][x].is_none() {
+                            if y+1 < 7 && board[y+1][x].is_none() {
                                 valid.push((x, y, x, y+1));
 
                                 if y == 1 && board[y+2][x].is_none() {
